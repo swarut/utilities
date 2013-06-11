@@ -27,7 +27,6 @@ if ARGV.size == 2
     puts "Target: #{target}"
 
     source_dir = Dir.new(source)
-    # target_dir = Dir.new(target)
     ios_dir = "#{target}/ios"
     android_xhdpi = "#{target}/android/xhdpi"
     android_hdpi  = "#{target}/android/hdpi"
@@ -42,11 +41,7 @@ if ARGV.size == 2
     end
 
     ignored_files = %w{. .. .DS_Store android ios}
-    puts "--------"
-    files = (source_dir.to_a - ignored_files)
-    files = files.reject{ |f| File.directory?(f) }
-    puts files
-    puts "--------"
+
     (source_dir.to_a - ignored_files).each do |file|
 
       target_file_name = file
@@ -80,12 +75,12 @@ if ARGV.size == 2
 else
   puts "============================================="
   puts "============================================="
-  puts "=== Iphone Image Resizer by Warut Surapat"
+  puts "=== Mobile Image Resizer by Warut Surapat"
   puts "=== http://www.swarut.com"
   puts "=== http://www.fingertip.in.th"
   puts "============================================="
   puts "============================================="
   puts "Usage format:"
-  puts "ruby iphone_image_resize.rb --source=[source] --target=[target]"
+  puts "ruby mobile_image_resizer.rb --source=[source] --target=[target]"
 end
 
