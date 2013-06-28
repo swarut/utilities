@@ -28,7 +28,7 @@ def extract_argrument(args0, args1)
 end
 
 def save_for_ios(image, ios_dir, target_file_name)
-
+  target_file_name = target_file_name.gsub("_ios_","_")
   extension = File.extname(target_file_name)
   target_file_name2x =
     "#{File.basename(target_file_name, ".*")}@2x#{extension}"
@@ -47,6 +47,8 @@ def save_for_android(image, android_dir, target_file_name)
   android_hdpi  = "#{android_dir}/hdpi"
   android_mdpi  = "#{android_dir}/mdpi"
   android_ldpi  = "#{android_dir}/ldpi"
+
+  target_file_name = target_file_name.gsub("_android_","_")
 
   # android
   # mdpi
