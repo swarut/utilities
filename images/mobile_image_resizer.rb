@@ -1,5 +1,7 @@
 require 'rmagick'
 
+
+
 class String
   def extract_file_for(key)
     self.gsub("--#{key.to_s}=", "")
@@ -34,41 +36,47 @@ def save_for_ios(image, ios_dir, target_file_name)
     "#{File.basename(target_file_name, ".*")}@2x#{extension}"
 
   # ios
-  ios_2x_scaled_image = image.scale(0.888)
+  ios_2x_scaled_image = image.scale(0.666)
   puts "writing #{ios_dir}/#{target_file_name2x}"
   ios_2x_scaled_image.write "#{ios_dir}/#{target_file_name2x}"
-  ios_scaled_image = image.scale(0.444)
+  ios_scaled_image = image.scale(0.333)
   puts "writing #{ios_dir}/#{target_file_name}"
   ios_scaled_image.write "#{ios_dir}/#{target_file_name}"
 end
 
 def save_for_android(image, android_dir, target_file_name)
-  android_xhdpi = "#{android_dir}/xhdpi"
-  android_hdpi  = "#{android_dir}/hdpi"
-  android_mdpi  = "#{android_dir}/mdpi"
-  android_ldpi  = "#{android_dir}/ldpi"
+  android_xxhdpi = "#{android_dir}/drawable-xxhdpi"
+  android_xhdpi = "#{android_dir}/drawable-xhdpi"
+  android_hdpi  = "#{android_dir}/drawable-hdpi"
+  android_mdpi  = "#{android_dir}/drawable-mdpi"
+  android_ldpi  = "#{android_dir}/drawable-ldpi"
 
   target_file_name = target_file_name.gsub("_android_","_")
 
   # android
   # mdpi
-  android_mdpi_scaled_image = image.scale(0.444)
+  android_mdpi_scaled_image = image.scale(0.3)
   puts "writing #{android_mdpi}/#{target_file_name}"
   android_mdpi_scaled_image.write "#{android_mdpi}/#{target_file_name}"
 
   # ldpi
-  android_ldpi_scaled_image = android_mdpi_scaled_image.scale(0.5)
+  android_ldpi_scaled_image = android_mdpi_scaled_image.scale(0.444)
   puts "writing #{android_ldpi}/#{target_file_name}"
   android_ldpi_scaled_image.write "#{android_ldpi}/#{target_file_name}"
 
   # hdpi
-  android_hdpi_scaled_image = image.scale(0.6666)
+  android_hdpi_scaled_image = image.scale(0.50)
   puts "writing #{android_hdpi}/#{target_file_name}"
   android_hdpi_scaled_image.write "#{android_hdpi}/#{target_file_name}"
 
   # xhdpi
+  android_xhdpi_scaled_image = image.scale(0.75)
   puts "writing #{android_xhdpi}/#{target_file_name}"
   image.write "#{android_xhdpi}/#{target_file_name}"
+
+  # xxhdpi
+  puts "writing #{android_xxhdpi}/#{target_file_name}"
+  image.write "#{android_xxhdpi}/#{target_file_name}"
 end
 
 if ARGV.size == 2
@@ -85,10 +93,10 @@ if ARGV.size == 2
     Dir.mkdir(ios_dir) unless Dir.exist?(ios_dir)
     unless Dir.exist?("#{target}/android")
       Dir.mkdir(android_dir)
-      Dir.mkdir("#{android_dir}/xhdpi")
-      Dir.mkdir("#{android_dir}/hdpi")
-      Dir.mkdir("#{android_dir}/mdpi")
-      Dir.mkdir("#{android_dir}/ldpi")
+      Dir.mkdir("#{android_dir}/drawable-xhdpi")
+      Dir.mkdir("#{android_dir}/drawable-hdpi")
+      Dir.mkdir("#{android_dir}/drawable-mdpi")
+      Dir.mkdir("#{android_dir}/drawable-ldpi")
     end
 
     ignored_files = %w{. .. .DS_Store android ios}
