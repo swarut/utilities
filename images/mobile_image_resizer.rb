@@ -1,7 +1,5 @@
 require 'rmagick'
 
-
-
 class String
   def extract_file_for(key)
     self.gsub("--#{key.to_s}=", "")
